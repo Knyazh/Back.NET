@@ -6,11 +6,11 @@ namespace Back.NET.Controllers
     {
         public IActionResult About()
         {
-            return View("~Views/Index.cshtml");
+            return View();
         }
         public IActionResult SecondPage()
         {
-            return View("~Views/SecondPage.cshtml");
+            return View();
         }
     }
 }
