@@ -6,12 +6,14 @@ namespace Back.NET
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            //services
             builder.Services.AddControllersWithViews();
             var app = builder.Build();
 
-            //app.MapGet("/", () => "Hello World!");
 
-            app.MapControllerRoute("default","{controller}/{action}");
+            //Middleware
+            app.UseStaticFiles();
+            app.MapControllerRoute("default","{controller=Home}/{action=About}");
 
             app.Run();
         }
