@@ -1,0 +1,51 @@
+﻿@using Back.NET.Database.Models;
+@model List<Book>
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+
+    <div class="container mt-5">
+        <div class="mb-3">
+            <a asp-controller="Book" asp-action="Add" class="btn btn-primary">Add new book</a>
+        </div>
+        <h2>Books</h2>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Publish date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int rowCounter = 1;
+                }
+                @foreach (var book in Model)
+                {
+                    <tr>
+                        <td>@(rowCounter++)</td>
+                        <td>@book.Title</td>
+                        <td>@book.Author</td>
+                        <td>@book.PublishDate</td>
+                        <td>
+                            <a asp-controller="Book" asp-action="Update" asp-route-id="@book.Id" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i> Edit</a>
+                            <button type="submit" class="btn btn-sm btn-danger" form="remove-form-@book.Id">Remove</button>
+
+                            <form asp-controller="Book" asp-action="Delete" method="POST" class="d-none" id="remove-form-@book.Id">
+                                <input type="hidden" name="id" value="@book.Id">
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>

@@ -7,13 +7,15 @@ namespace Back.NET
             var builder = WebApplication.CreateBuilder(args);
 
             //services
-            builder.Services.AddControllersWithViews();
+            builder.Services
+                .AddControllersWithViews()
+                .AddRazorRuntimeCompilation();
             var app = builder.Build();
 
 
             //Middleware
             app.UseStaticFiles();
-            app.MapControllerRoute("default","{controller=Home}/{action=About}");
+            app.MapControllerRoute("default","{controller=Book}/{action=Index}");
 
             app.Run();
         }
