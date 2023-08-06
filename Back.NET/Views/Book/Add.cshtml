@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+
+    <div class="container mt-5">
+        <a asp-controller="Book" asp-action="Index" class="btn btn-secondary mb-3">Return to List</a>
+        <h2>Add New Book</h2>
+        <form asp-controller="Book" asp-action="Add" method="POST">
+            <!-- For bakcend !-->
+            <div class="form-group">
+                <label for="title">Title:</label>
+                <input type="text" class="form-control" id="title" name="title" placeholder="Enter title"> <!-- For bakcend !-->
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea class="form-control" id="description" rows="4" name="description" placeholder="Enter description"></textarea> <!-- For bakcend !-->
+            </div>
+            <div class="form-group">
+                <label for="author">Author:</label>
+                <input type="text" class="form-control" id="author" name="author" placeholder="Enter author"> <!-- For bakcend !-->
+            </div>
+            <div class="form-group">
+                <label for="price">Price:</label>
+                <input type="number" class="form-control" id="price" name="price" placeholder="Enter price"> <!-- For bakcend !-->
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button> <!-- For bakcend !-->
+        </form>
+    </div>
+
+</body>
+</html>

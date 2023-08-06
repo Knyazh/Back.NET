@@ -22,4 +22,14 @@ public class BookRepository
     {
         _books.Add(book);
     }
+
+    public Book GetById(int id)
+    {
+        return _books.FirstOrDefault(b => b.Id == id);
+    }
+
+    public void RemoveById(int id)
+    {
+        _books.RemoveAll(b => b.Id == id);
+    }
 }
