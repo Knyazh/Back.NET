@@ -15,7 +15,7 @@ namespace Back.NET
 
             //Middleware
             app.UseStaticFiles();
-            app.MapControllerRoute("default","{controller=Book}/{action=Index}");
+            app.MapControllerRoute("default","{controller=Pronia}/{action=Index}");
 
             app.Run();
         }
