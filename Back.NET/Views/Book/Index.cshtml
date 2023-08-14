@@ -1,4 +1,4 @@
-﻿@model List<Book>
+﻿@*@model List<Product>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,9 +30,9 @@
                 {
                     <tr>
                         <td>@(rowCounter++)</td>
-                        <td>@book.Title</td>
-                        <td>@book.Author</td>
-                        <td>@book.PublishDate</td>
+                        <td>@Product.Title</td>
+                        <td>@Product.Author</td>
+                        <td>@Product.PublishDate</td>
                         <td>
                             <a asp-controller="Book" asp-action="Update" asp-route-id="@book.Id" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i> Edit</a>
                             <button type="submit" class="btn btn-sm btn-danger" form="remove-form-@book.Id">Remove</button>
@@ -49,3 +49,4 @@
 
 </body>
 </html>
+*@
