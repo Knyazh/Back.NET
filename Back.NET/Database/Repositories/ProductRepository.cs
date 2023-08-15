@@ -1,36 +1,58 @@
-﻿using Pustok.Database.Models;
+﻿using Back.NET.Database;
+using Pustok.Database.Models;
 
 namespace Pustok.Database.Repositories;
 
 public class ProductRepository
 {
-    private static readonly List<Product> _products = new List<Product>();
+    private BackDbContext _dbContext;
 
-    static ProductRepository()
+    public ProductRepository()
     {
-        _products.Add(new Product("Zogal", "this is desciada 4s", "black", "XS", 500));
-        _products.Add(new Product("Alma", "this is desciadas", "red", "XS", 200));
-        _products.Add(new Product("Heyva", "this is desciada2 s", "red", "XS", 400));
-        _products.Add(new Product("Nar", "this is desciadas 3", "blue", "XS", 300));
+        _dbContext = new BackDbContext();
     }
+
+  
 
     public List<Product> GetAll()
     {
-        return _products;
+        return _dbContext.Products.ToList();
     }
 
     public void Insert(Product slideBanner)
     {
-        _products.Add(slideBanner);
+        _dbContext.Products.Add(slideBanner);
+        _dbContext.SaveChanges();
     }
 
     public Product GetById(int id)
     {
-        return _products.FirstOrDefault(b => b.Id == id);
+        return _dbContext.Products.FirstOrDefault(b => b.Id == id);
     }
 
     public void RemoveById(int id)
     {
-        _products.RemoveAll(b => b.Id == id);
+
+        try
+        {
+            var product = GetById(id);
+
+            _dbContext.Products.Remove(product);
+
+            _dbContext.SaveChanges();
+        }
+        catch (NullReferenceException e )
+        {
+
+            throw new Exception(@" not found ", e);
+            //rethrow an exception
+        }
+       
+    }
+
+    public void Update(Product product) 
+    {
+        _dbContext.Products.Update(product);
+        _dbContext.SaveChanges();
     }
 }

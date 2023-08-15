@@ -92,6 +92,8 @@ public class ProductController : Controller
             Price = product.Price
         };
 
+        _productRepository.Update(product);
+
         return View("~/Views/Admin/Product/Update.cshtml", model);
     }
 
