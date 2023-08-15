@@ -1,20 +1,37 @@
-﻿using Back.NET.Database.Repositories;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Pustok.Database.Models;
+using Pustok.Database.Repositories;
+using Pustok.ViewModels;
 
-namespace Back.NET.Controllers.Client
+namespace Pustok.Controllers.Client
 {
-    public class HomeController : Controller
+    public class HomeController : Controller //controller
     {
-        private readonly SliderBannerRepository _sliderBannerRepository;
+        private readonly SlideBannerRepository _slideBannerRepository;
+        private readonly ProductRepository _productRepository;
+
         public HomeController()
         {
-            _sliderBannerRepository = new SliderBannerRepository();
+            _slideBannerRepository = new SlideBannerRepository();
+            _productRepository = new ProductRepository();
         }
+
         public IActionResult Index()
         {
-            var slidebanner = _sliderBannerRepository.GetAll();
-            return View("~/Views/Pronia/Index.cshtml", slidebanner);
+            var model = new HomeViewModel
+            {
+                SlideBanners = _slideBannerRepository
+                    .GetAll()
+                    .OrderBy(sb => sb.Order)
+                    .ToList(),
+
+                Products = _productRepository
+                    .GetAll()
+                    .OrderBy(p => p.Name)
+                    .ToList()
+            };
+
+            return View("~/Views/Client/Home/Index.cshtml", model);
         }
-      
     }
 }
