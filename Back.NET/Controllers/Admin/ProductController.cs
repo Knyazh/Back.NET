@@ -1,52 +1,45 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Back.NET.Database;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Pustok.Database.Models;
-using Pustok.Database.Repositories;
 using Pustok.ViewModels;
+using System.Data.Entity;
 
 namespace Pustok.Controllers;
 
 public class ProductController : Controller
 {
-    private readonly ProductRepository _productRepository;
 
     public ProductController()
     {
-        _productRepository = new ProductRepository();
+
     }
 
     [HttpGet]
     public IActionResult Index()
     {
-        var products = _productRepository.GetAll();
-            var productViewModels = products
-            .Select(p => new ProductListItemViewModel
-            {
-                Id = p.Id,
-                Name = p.Name,
-                Description = p.Description,
-                Color = p.Color,
-                Size = p.Size,
-                Price = p.Price
-            })
-            .ToList();
+        using var dbContext = new BackDbContext();
 
-        //var productViewModels = new List<ProductListItemViewModel>();
-
-        //foreach (var product in products)
-        //{
-        //    productViewModels.Add(new ProductListItemViewModel
-        //    {
-        //        Id = product.Id,
-        //        Name = product.Name,
-        //        Description = product.Description,
-        //        Color = product.Color,
-        //        Size = product.Size,
-        //        Price = product.Price
-        //    });
-        //}
+        var products = dbContext.Products.ToList();
+        var productViewModels = products
+        .Select(p => new ProductListItemViewModel
+        {
+            Id = p.Id,
+            Name = p.Name,
+            Description = p.Description,
+            Color = p.Color,
+            Size = p.Size,
+            Price = p.Price
+        })
+        .ToList();
 
         var result = View("~/Views/Admin/Product/Index.cshtml", productViewModels);
+        dbContext.Dispose();
         return result;
+
+
+
+
     }
 
     #region Add
@@ -60,14 +53,16 @@ public class ProductController : Controller
     [HttpPost]
     public IActionResult Add(ProductAddViewModel model)
     {
+        var dbContext = new BackDbContext();
         var product = new Product(
             model.Name,
             model.Description,
             model.Color,
             model.Size,
-            model.Price);
+        model.Price);
 
-        _productRepository.Insert(product);
+        dbContext.Products.Add(product);
+        dbContext.SaveChanges();
 
         return RedirectToAction(nameof(Index));
     }
@@ -79,7 +74,8 @@ public class ProductController : Controller
     [HttpGet]
     public IActionResult Update(int id)
     {
-        var product = _productRepository.GetById(id);
+        var dbContext = new BackDbContext();
+        var product = dbContext.Products.FirstOrDefault(p => p.Id == id);
         if (product == null) return NotFound();
 
         var model = new ProductUpdateViewModel
@@ -92,7 +88,7 @@ public class ProductController : Controller
             Price = product.Price
         };
 
-        _productRepository.Update(product);
+
 
         return View("~/Views/Admin/Product/Update.cshtml", model);
     }
@@ -100,7 +96,8 @@ public class ProductController : Controller
     [HttpPost]
     public IActionResult Update(ProductUpdateViewModel model)
     {
-        var product = _productRepository.GetById(model.Id);
+        var dbContext = new BackDbContext();
+        var product = dbContext.Products.FirstOrDefault(p => p.Id == model.Id);
         if (product == null) return NotFound();
 
         product.Name = model.Name;
@@ -108,23 +105,29 @@ public class ProductController : Controller
         product.Color = model.Color;
         product.Price = model.Price;
 
+        dbContext.Products.Update(product);
+        dbContext.SaveChanges();
+
         return RedirectToAction(nameof(Index));
     }
 
     #endregion
 
-    //#region Delete
+    #region Delete
 
-    //[HttpPost]
-    //public IActionResult Delete(int id)
-    //{
-    //    var book = _productRepository.GetById(id);
-    //    if (book == null) return NotFound();
+    [HttpPost]
+    public IActionResult Delete(int id)
+    {
+        var dbContext = new BackDbContext();
+        var product = dbContext.Products.FirstOrDefault(p => p.Id == id);
+        if (product == null) return NotFound();
 
-    //    _productRepository.RemoveById(id);
 
-    //    return RedirectToAction(nameof(Index));
-    //}
+        dbContext.Products.Remove(product);
+        dbContext.SaveChanges();
 
-    //#endregion
+        return RedirectToAction(nameof(Index));
+    }
+
+    #endregion
 }
