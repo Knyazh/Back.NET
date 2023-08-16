@@ -18,7 +18,7 @@ public class ProductController : Controller
 
 
     #region Index
-    [HttpGet("Index")]
+    [HttpGet]
     public IActionResult Index()
     {
         var products = _backDbContext.Products.ToList();
@@ -68,12 +68,12 @@ public class ProductController : Controller
 
     #region Update
 
-    [HttpGet("Update")]
+    [HttpGet("{id}/Update")]
     public IActionResult Update(int id)
     {
         var product = _backDbContext.Products.FirstOrDefault(p => p.Id == id);
-        if (product == null) return NotFound();
-
+        if (product == null) ModelState.AddModelError(string.Empty, "Product not found");
+        
         var model = new ProductUpdateViewModel
         {
             Id = product.Id,
@@ -86,10 +86,10 @@ public class ProductController : Controller
 
 
 
-        return View("~/Views/Admin/Product/Update.cshtml", model);
+        return View("~/Views/Admin/Product/Update.cshtml");
     }
 
-    [HttpPost]
+    [HttpPost("{id}/Update")]
     public IActionResult Update(ProductUpdateViewModel model)
     {
         var product = _backDbContext.Products.FirstOrDefault(p => p.Id == model.Id);

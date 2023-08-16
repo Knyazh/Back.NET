@@ -2,7 +2,7 @@
 //using Back.NET.Database.Models;
 //using Back.NET.ViewModels;
 
-//namespace Pustok.Controllers.Client
+//namespace Back.NET.Controllers.Client
 //{
 //    public class HomeController : Controller //controller
 //    {
