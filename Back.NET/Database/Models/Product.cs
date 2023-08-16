@@ -2,8 +2,6 @@
 
 public class Product
 {
-   
-
     public Product(string name, string decription, string color, string size, decimal price)
     {
         Name = name;
@@ -12,11 +10,9 @@ public class Product
         Size = size;
         Price = price;
     }
+
     public Product() {}
-
-
     public int Id { get; set; }
-
     public string Name { get; set; }
     public string Description { get; set; }
     public string Color { get; set; }
