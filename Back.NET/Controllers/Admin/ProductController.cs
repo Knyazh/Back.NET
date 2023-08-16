@@ -1,12 +1,12 @@
 ﻿using Back.NET.Database;
+using Back.NET.ViewModels.Admin;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Pustok.Database.Models;
-using Pustok.ViewModels;
+using Back.NET.Database.Models;
 using System.CodeDom;
 using System.Data.Entity;
 
-namespace Pustok.Controllers;
+namespace Back.NET.Controllers;
 [Route("Admin/product")]
 public class ProductController : Controller
 {

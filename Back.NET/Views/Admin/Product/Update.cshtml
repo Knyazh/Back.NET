@@ -1,44 +1,77 @@
 ﻿@model ProductUpdateViewModel
-<!DOCTYPE html>
-<html>
-<head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-<body>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <div class="float-end">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a asp-controller="product" asp-action="index">Products</a></li>
+                    <li class="breadcrumb-item active">Edit Product</li>
+                </ol>
+            </div>
+            <h4 class="page-title">Add product</h4>
+        </div><!--end page-title-box-->
+    </div><!--end col-->
+</div>
 
-    <div class="container mt-5">
-        <a asp-controller="product" asp-action="index" class="btn btn-secondary mb-3">Return to List</a>
-        <h2>Update product</h2>
-        <form asp-controller="product" asp-action="update" method="POST">
-            <div class="form-group">
-                <label asp-for="Id"></label>
-                <input type="hidden" asp-for="Id" />
-            </div>
-            <!-- For bakcend !-->
-            <div class="form-group">
-                <label asp-for="Name"></label>
-                <input placeholder="Enter title" class="form-control" asp-for="Name" />
-            </div>
-            <div class="form-group">
-                <label asp-for="Description"></label>
-                <textarea placeholder="Enter Description" class="form-control" asp-for="Description"></textarea> <!-- For bakcend !-->
-            </div>
-            <div class="form-group">
-                <label asp-for="Color"></label>
-                <input placeholder="Enter color" class="form-control" asp-for="Color" />
-            </div>
-            <div class="form-group">
-                <label asp-for="Size"></label>
-                <input placeholder="Enter size" class="form-control" asp-for="Size" />
-            </div>
-            <div class="form-group">
-                <label asp-for="Price"></label>
-                <input placeholder="Enter Price" class="form-control" asp-for="Price" />
-            </div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div asp-validation-summary="ModelOnly"></div>
+                <form method="POST" asp-controller="product" asp-action="update" id="submit-form">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label asp-for="Name"></label>
+                                <input class="form-control" asp-for="Name">
+                                <span asp-validation-for="Name" class="invalid-feedback" style="display:block"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label asp-for="Description"></label>
+                                <input class="form-control" asp-for="Description">
+                                <span asp-validation-for="Description" class="invalid-feedback" style="display:block"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label asp-for="Color"></label>
+                                <input class="form-control" asp-for="Color">
+                                <span asp-validation-for="Color" class="invalid-feedback" style="display:block"></span>
+                            </div>
+                        </div>
 
-            <button type="submit" class="btn btn-primary">Save</button> <!-- For bakcend !-->
-        </form>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label asp-for="Size"></label>
+                                <input class="form-control" asp-for="Size">
+                                <span asp-validation-for="Size" class="invalid-feedback" style="display:block"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label asp-for="Price"></label>
+                                <input class="form-control" asp-for="Price">
+                                <span asp-validation-for="Price" class="invalid-feedback" style="display:block"></span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
+</div>
 
-</body>
-</html>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="form-group mt-3">
+                    <button class="btn btn-primary" type="submit" form="submit-form">Save</button>
+                    <a asp-controller="product" asp-action="index" class="btn btn-danger">Cancel</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,8 +1,8 @@
 ﻿//using Microsoft.AspNetCore.Mvc;
-//using Pustok.Database.Models;
-//using Pustok.Database.Repositories;
+//using Back.NET.Database.Models;
+//using Back.NET.Database.Repositories;
 
-//namespace Pustok.Controllers;
+//namespace Back.NET.Controllers;
 
 //public class BookController : Controller
 //{

@@ -1,4 +1,4 @@
-﻿namespace Pustok.Database.Models;
+﻿namespace Back.NET.Database.Models;
 
 public class Product
 {

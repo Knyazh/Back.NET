@@ -1,7 +1,7 @@
 ﻿
 
 using Microsoft.EntityFrameworkCore;
-using Pustok.Database.Models;
+using Back.NET.Database.Models;
 
 namespace Back.NET.Database;
 

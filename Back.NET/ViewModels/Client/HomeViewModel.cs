@@ -1,6 +1,6 @@
-﻿using Pustok.Database.Models;
+﻿using Back.NET.Database.Models;
 
-namespace Pustok.ViewModels
+namespace Back.NET.ViewModels.Client
 {
     public class HomeViewModel
     {

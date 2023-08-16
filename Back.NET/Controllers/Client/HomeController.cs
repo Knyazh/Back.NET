@@ -1,6 +1,6 @@
 ﻿//using Microsoft.AspNetCore.Mvc;
-//using Pustok.Database.Models;
-//using Pustok.ViewModels;
+//using Back.NET.Database.Models;
+//using Back.NET.ViewModels;
 
 //namespace Pustok.Controllers.Client
 //{
