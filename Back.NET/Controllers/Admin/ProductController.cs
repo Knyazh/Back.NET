@@ -3,24 +3,25 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Pustok.Database.Models;
 using Pustok.ViewModels;
+using System.CodeDom;
 using System.Data.Entity;
 
 namespace Pustok.Controllers;
-
+[Route("Admin/product")]
 public class ProductController : Controller
 {
-
+    private readonly BackDbContext _backDbContext;
     public ProductController()
     {
-
+        _backDbContext = new BackDbContext();
     }
 
-    [HttpGet]
+
+    #region Index
+    [HttpGet("Index")]
     public IActionResult Index()
     {
-        using var dbContext = new BackDbContext();
-
-        var products = dbContext.Products.ToList();
+        var products = _backDbContext.Products.ToList();
         var productViewModels = products
         .Select(p => new ProductListItemViewModel
         {
@@ -34,17 +35,14 @@ public class ProductController : Controller
         .ToList();
 
         var result = View("~/Views/Admin/Product/Index.cshtml", productViewModels);
-        dbContext.Dispose();
+        _backDbContext.Dispose();
         return result;
-
-
-
-
     }
+    #endregion
 
     #region Add
 
-    [HttpGet]
+    [HttpGet("Add")]
     public IActionResult Add()
     {
         return View("~/Views/Admin/Product/Add.cshtml");
@@ -53,7 +51,6 @@ public class ProductController : Controller
     [HttpPost]
     public IActionResult Add(ProductAddViewModel model)
     {
-        var dbContext = new BackDbContext();
         var product = new Product(
             model.Name,
             model.Description,
@@ -61,8 +58,8 @@ public class ProductController : Controller
             model.Size,
         model.Price);
 
-        dbContext.Products.Add(product);
-        dbContext.SaveChanges();
+        _backDbContext.Products.Add(product);
+        _backDbContext.SaveChanges();
 
         return RedirectToAction(nameof(Index));
     }
@@ -71,11 +68,10 @@ public class ProductController : Controller
 
     #region Update
 
-    [HttpGet]
+    [HttpGet("Update")]
     public IActionResult Update(int id)
     {
-        var dbContext = new BackDbContext();
-        var product = dbContext.Products.FirstOrDefault(p => p.Id == id);
+        var product = _backDbContext.Products.FirstOrDefault(p => p.Id == id);
         if (product == null) return NotFound();
 
         var model = new ProductUpdateViewModel
@@ -96,8 +92,7 @@ public class ProductController : Controller
     [HttpPost]
     public IActionResult Update(ProductUpdateViewModel model)
     {
-        var dbContext = new BackDbContext();
-        var product = dbContext.Products.FirstOrDefault(p => p.Id == model.Id);
+        var product = _backDbContext.Products.FirstOrDefault(p => p.Id == model.Id);
         if (product == null) return NotFound();
 
         product.Name = model.Name;
@@ -105,8 +100,8 @@ public class ProductController : Controller
         product.Color = model.Color;
         product.Price = model.Price;
 
-        dbContext.Products.Update(product);
-        dbContext.SaveChanges();
+        _backDbContext.Products.Update(product);
+        _backDbContext.SaveChanges();
 
         return RedirectToAction(nameof(Index));
     }
@@ -115,19 +110,25 @@ public class ProductController : Controller
 
     #region Delete
 
-    [HttpPost]
+    [HttpPost("Delete")]
     public IActionResult Delete(int id)
     {
-        var dbContext = new BackDbContext();
-        var product = dbContext.Products.FirstOrDefault(p => p.Id == id);
+        var product = _backDbContext.Products.FirstOrDefault(p => p.Id == id);
         if (product == null) return NotFound();
 
 
-        dbContext.Products.Remove(product);
-        dbContext.SaveChanges();
+        _backDbContext.Products.Remove(product);
+        _backDbContext.SaveChanges();
 
         return RedirectToAction(nameof(Index));
     }
 
     #endregion
+
+
+    //Destructor or Finalizer
+    ~ProductController()
+    {
+        _backDbContext.Dispose();
+    }
 }
