@@ -1,24 +1,25 @@
-//namespace Back.NET
-//{
-//    public class Program
-//    {
-//        public static void Main(string[] args)
-//        {
-//            var builder = WebApplication.CreateBuilder(args);
+namespace Back.NET
+{
+    public class Program
+    {
 
-//            //services
-//            builder.Services
-//                .AddControllersWithViews()
-//                .AddRazorRuntimeCompilation();
-//            var app = builder.Build();
+        public static void Main(string[] args)
+        {
+            var builder = WebApplication.CreateBuilder(args);
+
+            //services
+            builder.Services
+                .AddControllersWithViews()
+                .AddRazorRuntimeCompilation();
+            var app = builder.Build();
 
 
-//            //Middleware
-//            app.UseStaticFiles();
-//            app.MapControllerRoute("default","{controller=Home}/{action=Index}");
+            //middleware
+            app.UseStaticFiles();
+            app.MapControllerRoute("default", "{controller=home}/{action=index}");
 
-//            app.Run();
-//        }
+            app.Run();
+        }
 
-//    }
-//}
+    }
+}
